@@ -4,7 +4,7 @@ import cgi
 import json
 import mysql.connector as sql
 
-myport = 102
+myport = 80
 
 class GP(BaseHTTPRequestHandler):
     def _set_headers(self):
@@ -19,7 +19,7 @@ class GP(BaseHTTPRequestHandler):
         print(parse_qs(self.path[2:]))
 
         query = "SELECT sender, receiver, message FROM messages"
-        cursor.execute(query)
+        # cursor.execute(query)
         entries = []
         for entry in cursor:
             entries.append(entry)
@@ -39,7 +39,10 @@ class GP(BaseHTTPRequestHandler):
         message = form.getvalue("message")
 
         add_message = "INSERT INTO messages (sender, receiver, message) VALUES ('{0}','{1}','{2}')".format(sender, receiver, message)
-        cursor.execute(add_message)
+        # cursor.execute(add_message)
+        with open("messages.txt",'w') as msgfile:
+            msgfile.write(add_message)
+
         db.commit()
 
         self.wfile.write(bytes("<html><body><h1>Message from {0} to {1} received!\n</h1></body></html>".format(sender, receiver), "utf-8"))
@@ -50,14 +53,14 @@ def run(server_class=HTTPServer, handler_class=GP, port=80):
     print('Server running at localhost:80...')
     httpd.serve_forever()
 
-db = sql.connect(
-    host = "localhost",
-    user = "root",
-    password = "commNets",
-    database = "Messages",
-    port = myport
-)
+# db = sql.connect(
+#     host = "localhost",
+#     user = "root",
+#     password = "commNets",
+#     database = "Messages",
+#     port = myport
+# )
 
-cursor = db.cursor()
+# cursor = db.cursor()
 
 run(port=myport)
