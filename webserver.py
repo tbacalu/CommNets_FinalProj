@@ -2,7 +2,6 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs
 import cgi
 import json
-import mysql.connector as sql
 
 myport = 80
 
