@@ -28,7 +28,7 @@ class GP(BaseHTTPRequestHandler):
         for line in msgfile:
             entries.append(line)
         
-        self.wfile.write(json.dumps(entries))
+        self.wfile.write(bytes(json.dumps(entries),'utf-8'))
         
         # self.wfile.write("<html><body><h1>Get Request Received!</h1></body></html>")
     def do_POST(self):
