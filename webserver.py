@@ -4,6 +4,10 @@ import cgi
 import json
 
 myport = 80
+outfile = open("messages.txt","w")
+outfile.write("")
+outfile.close()
+outfile = open("messages.txt","a")
 
 class GP(BaseHTTPRequestHandler):
     def _set_headers(self):
@@ -37,11 +41,9 @@ class GP(BaseHTTPRequestHandler):
         receiver =  form.getvalue("receiver")
         message = form.getvalue("message")
 
-        add_message = "INSERT INTO messages (sender, receiver, message) VALUES ('{0}','{1}','{2}')".format(sender, receiver, message)
+        add_message = "INSERT INTO messages (sender, receiver, message) VALUES ('{0}','{1}','{2}')\n".format(sender, receiver, message)
         # cursor.execute(add_message)
-        with open("messages.txt",'w') as msgfile:
-            msgfile.write(add_message)
-
+        outfile.write(add_message)
         #db.commit()
 
         self.wfile.write(bytes("<html><body><h1>Message from {0} to {1} received!\n</h1></body></html>".format(sender, receiver), "utf-8"))
@@ -63,3 +65,4 @@ def run(server_class=HTTPServer, handler_class=GP, port=80):
 # cursor = db.cursor()
 
 run(port=myport)
+outfile.close()
