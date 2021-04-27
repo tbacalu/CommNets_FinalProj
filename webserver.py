@@ -42,7 +42,7 @@ class GP(BaseHTTPRequestHandler):
         with open("messages.txt",'w') as msgfile:
             msgfile.write(add_message)
 
-        db.commit()
+        #db.commit()
 
         self.wfile.write(bytes("<html><body><h1>Message from {0} to {1} received!\n</h1></body></html>".format(sender, receiver), "utf-8"))
 
