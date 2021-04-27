@@ -43,7 +43,8 @@ class GP(BaseHTTPRequestHandler):
         receiver =  form.getvalue("receiver")
         message = form.getvalue("message")
 
-        add_message = "INSERT INTO messages (sender, receiver, message) VALUES ('{0}','{1}','{2}')\n".format(sender, receiver, message)
+        # add_message = "INSERT INTO messages (sender, receiver, message) VALUES ('{0}','{1}','{2}')\n".format(sender, receiver, message)
+        add_message = str({'sender': sender, 'receiver': receiver, 'message': message})
         # cursor.execute(add_message)
         msgfile.write(add_message)
         #db.commit()
