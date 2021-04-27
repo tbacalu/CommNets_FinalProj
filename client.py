@@ -5,8 +5,7 @@ import json
 
 def getMessages(user):
     params = {"user": user}
-    r = requests.get(
-        "http://ec2-3-139-54-119.us-east-2.compute.amazonaws.com", params)
+    r = requests.get("http://ec2-3-139-54-119.us-east-2.compute.amazonaws.com", params).decode('utf-8')
     print(f"\nMessages for {user}:")
     for message in r.json()['messages']:
         print(f"({message['sender']}) {message['value']}")
@@ -16,8 +15,7 @@ def getMessages(user):
 def send(to_usr, msg):
     print(f"Sending {msg} to {to_usr}")
     data = {"sender": user, "receiver": to_usr, "message": msg}
-    r = requests.post(
-        "http://ec2-3-139-54-119.us-east-2.compute.amazonaws.com", data)
+    r = requests.post("http://ec2-3-139-54-119.us-east-2.compute.amazonaws.com", data)
 
 
 user = sys.argv[1]
