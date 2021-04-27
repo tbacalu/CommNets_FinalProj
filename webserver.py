@@ -4,10 +4,10 @@ import cgi
 import json
 
 myport = 80
-outfile = open("messages.txt","w")
-outfile.write("")
-outfile.close()
-outfile = open("messages.txt","a")
+msgfile = open("messages.txt","w")
+msgfile.write("")
+msgfile.close()
+
 
 class GP(BaseHTTPRequestHandler):
     def _set_headers(self):
@@ -17,6 +17,7 @@ class GP(BaseHTTPRequestHandler):
     def do_HEAD(self):
         self._set_headers()
     def do_GET(self):
+        msgfile = open("messages.txt",'r')
         self._set_headers()
         print(self.path)
         print(parse_qs(self.path[2:]))
@@ -24,13 +25,14 @@ class GP(BaseHTTPRequestHandler):
         query = "SELECT sender, receiver, message FROM messages"
         # cursor.execute(query)
         entries = []
-        for entry in cursor:
-            entries.append(entry)
+        for line in msgfile:
+            entries.append(line)
         
         self.wfile.write(json.dumps(entries))
         
         # self.wfile.write("<html><body><h1>Get Request Received!</h1></body></html>")
     def do_POST(self):
+        msgfile = open("messages.txt","a")
         self._set_headers()
         form = cgi.FieldStorage(
             fp=self.rfile,
@@ -43,10 +45,11 @@ class GP(BaseHTTPRequestHandler):
 
         add_message = "INSERT INTO messages (sender, receiver, message) VALUES ('{0}','{1}','{2}')\n".format(sender, receiver, message)
         # cursor.execute(add_message)
-        outfile.write(add_message)
+        msgfile.write(add_message)
         #db.commit()
 
         self.wfile.write(bytes("<html><body><h1>Message from {0} to {1} received!\n</h1></body></html>".format(sender, receiver), "utf-8"))
+        msgfile.close()
 
 def run(server_class=HTTPServer, handler_class=GP, port=80):
     server_address = ('', port)
@@ -65,4 +68,3 @@ def run(server_class=HTTPServer, handler_class=GP, port=80):
 # cursor = db.cursor()
 
 run(port=myport)
-outfile.close()
