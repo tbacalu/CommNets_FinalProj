@@ -42,7 +42,7 @@ class GP(BaseHTTPRequestHandler):
         message_dict = {'sender': sender, 'receiver': receiver, 'message': message}
         # cursor.execute(add_message)
         with open("messages.json","a") as msgfile:
-            json.load(msgfile, message_dict)
+            json.dump(msgfile, message_dict)
         #db.commit()
 
         self.wfile.write(bytes("message from {0} to {1} received!".format(sender, receiver), "utf-8"))
