@@ -12,7 +12,7 @@ msgfile.close()
 class GP(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
-        self.send_header('Content-type', 'application/json')
+        self.send_header('Content-Type', 'application/json')
         self.end_headers()
     def do_HEAD(self):
         self._set_headers()
@@ -24,7 +24,7 @@ class GP(BaseHTTPRequestHandler):
         query = "SELECT sender, receiver, message FROM messages"
         # cursor.execute(query)
         with open("messages.txt",'r') as msgfile:
-            self.wfile.write(bytes(json.load(msgfile), "utf-8"))
+            self.wfile.write(bytes(str(json.load(msgfile)), "utf-8"))
         
         # self.wfile.write("<html><body><h1>Get Request Received!</h1></body></html>")
     def do_POST(self):

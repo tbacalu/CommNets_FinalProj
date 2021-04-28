@@ -8,6 +8,7 @@ def getMessages(user):
     r = requests.get(
         "http://ec2-3-139-54-119.us-east-2.compute.amazonaws.com", params)
     print(r.apparent_encoding)
+    print(r.raw)
     print(f"\nMessages for {user}:")
     for message in r.json()['messages']:
         print(f"({message['sender']}) {message['value']}")
