@@ -23,7 +23,7 @@ class GP(BaseHTTPRequestHandler):
 
         query = "SELECT sender, receiver, message FROM messages"
         # cursor.execute(query)
-        with msgfile = open("messages.txt",'r'):
+        with open("messages.txt",'r') as msgfile:
             self.wfile.write(json.load(msgfile))
         
         # self.wfile.write("<html><body><h1>Get Request Received!</h1></body></html>")
@@ -41,7 +41,7 @@ class GP(BaseHTTPRequestHandler):
         # add_message = "INSERT INTO messages (sender, receiver, message) VALUES ('{0}','{1}','{2}')\n".format(sender, receiver, message)
         message_dict = {'sender': sender, 'receiver': receiver, 'message': message}
         # cursor.execute(add_message)
-        with msgfile = open("messages.json","a")
+        with open("messages.json","a") as msgfile:
             json.load(msgfile, message_dict)
         #db.commit()
 
