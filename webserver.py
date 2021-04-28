@@ -24,7 +24,7 @@ class GP(BaseHTTPRequestHandler):
         query = "SELECT sender, receiver, message FROM messages"
         # cursor.execute(query)
         with open("messages.txt",'r') as msgfile:
-            self.wfile.write(bytes(str(json.load(msgfile)), "utf-8"))
+            self.wfile.write(str(json.load(msgfile)))
         
         # self.wfile.write("<html><body><h1>Get Request Received!</h1></body></html>")
     def do_POST(self):
@@ -45,7 +45,7 @@ class GP(BaseHTTPRequestHandler):
             json.dump(msgfile, message_dict)
         #db.commit()
 
-        self.wfile.write(bytes("message from {0} to {1} received!".format(sender, receiver), "utf-8"))
+        self.wfile.write("message from {0} to {1} received!".format(sender, receiver))
 
 def run(server_class=HTTPServer, handler_class=GP, port=80):
     server_address = ('', port)
