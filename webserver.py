@@ -45,7 +45,7 @@ class GP(BaseHTTPRequestHandler):
             json.load(msgfile, message_dict)
         #db.commit()
 
-        self.wfile.write(bytes("<html><body><h1>Message from {0} to {1} received!\n</h1></body></html>".format(sender, receiver), "utf-8"))
+        self.wfile.write(bytes("message from {0} to {1} received!".format(sender, receiver), "utf-8"))
 
 def run(server_class=HTTPServer, handler_class=GP, port=80):
     server_address = ('', port)
