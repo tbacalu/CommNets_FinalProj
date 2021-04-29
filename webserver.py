@@ -27,8 +27,8 @@ class GP(BaseHTTPRequestHandler):
         # Retrieves messages from database
         cur.execute(f"SELECT sender, message FROM messages WHERE receiver = '{user}'")
         results = cur.fetchall()
-        
-        cursor.execute(f"DELETE FROM messages WHERE receiver = '{user}'")
+
+        cur.execute(f"DELETE FROM messages WHERE receiver = '{user}'")
         con.commit()
         # get it in JSON format
         if results:
