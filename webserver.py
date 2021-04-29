@@ -26,6 +26,7 @@ class GP(BaseHTTPRequestHandler):
         print(f"Retrieving messages for {user}...")
         # Retrieves messages from database
         cur.execute(f"SELECT sender, message FROM messages WHERE receiver = '{user}'")
+        results = cursor.fetchall()
         con.commit()
         # get it in JSON format
         response = json.dumps(
