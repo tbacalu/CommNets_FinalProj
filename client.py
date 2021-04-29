@@ -2,7 +2,7 @@ import requests
 import sys
 import json
 
-my_dns = "http://ec2-18-216-227-172.us-east-2.compute.amazonaws.com"
+my_dns = "http://ec2-3-139-54-119.us-east-2.compute.amazonaws.com"
 
 def getMessages(user):
 	params = {"user":user}
