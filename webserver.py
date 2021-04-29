@@ -29,9 +29,13 @@ class GP(BaseHTTPRequestHandler):
         results = cursor.fetchall()
         con.commit()
         # get it in JSON format
-        response = json.dumps(
-            {'user': user, 'messages': [{'sender': msgInfo[0], 'value': msgInfo[1]} for msgInfo in results]}
-        )
+        if results:
+            response = json.dumps(
+                {'user': user, 'messages': [{'sender': msgInfo[0], 'value': msgInfo[1]} for msgInfo in results]}
+            )
+        else:
+            response = json.dumps({})
+
         # Returns messages to client
         self.wfile.write(bytes(response,"utf-8"))
     
